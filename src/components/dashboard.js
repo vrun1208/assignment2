@@ -8,6 +8,7 @@ const Dashboard = () =>{
     const [search, setSearch] = useState("")
     const [selectedRows, setSelectedRows] = useState([])
     const [edit, setEdit] = useState(null)
+    const [editData, setEditData] = useState({});
 
     //pagination
     const totalPages = Math.ceil(list.length /10);
@@ -48,7 +49,10 @@ const Dashboard = () =>{
     const handleDeleteRow = (id) => {
       setList((prevUserData) =>
         prevUserData.filter(user => user.id !== id)
-      );    
+      );  
+      setSelectedRows((row) => {
+        return row.filter(rowId => rowId !== id)
+      });  
     };  
 
     //function to store selected rows by their ID's
@@ -81,24 +85,35 @@ const Dashboard = () =>{
     }  
 
     //set id which is selected for edit
-    const handleEdit = (id) => {
-        setEdit(id)
+    const handleEditRow = (id, username, usermail, userrole) =>{
+      setEdit(id);
+      setEditData({
+        name: username,
+        email: usermail,
+        role: userrole,
+      })
     }
 
     //function to update user_name and return the updated data
-    const handleEditChange = (e, id) => {
-        const updatedData = list.map(user => {
-          if (user.id === id) {
-            return { ...user, name: e.target.value };
-          }
-          return user;
-        });
-        setList(updatedData);
+    const handleEditChange = (e, column_name) => {
+        setEditData((prevData) => ({
+          ...prevData,
+          [column_name]: e.target.value
+        }));
+        //setList(updatedData);
       };
 
     //function to save the edited data  
-    const handleSaveEdit = () => {
-        setEdit(null)
+    const handleSaveEdit = (id) => {
+        const updateData = list.map((e) => {
+            if(e.id === id){
+              return {...e, name:editData.name, email:editData.email, role:editData.role}
+            }
+            return e;
+        });
+        setList(updateData);
+        setEdit(null);
+        setEditData({});
     }  
 
   return (
@@ -114,6 +129,7 @@ const Dashboard = () =>{
             {/*<th>User ID</th>*/}
             <th>Name</th>
             <th>Email</th>
+            <th>Role</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -123,14 +139,15 @@ const Dashboard = () =>{
             <tr key={user.id} className={selectedRows.includes(user.id) ? 'row' : ''}>
               <td><input type="checkbox" checked={selectedRows.includes(user.id)} onChange={() => handleSelectRow(user.id)} /></td>
               {/*<td>{user.id}</td>*/}
-              <td>{edit === user.id ? <input type="text" value={user.name} onChange={(e) => handleEditChange(e, user.id)} /> : user.name}</td>
-              <td>{user.email}</td>
+              <td>{edit === user.id ? <input type="text" value={editData.name} onChange={(e) => handleEditChange(e, 'name')} /> : user.name}</td>
+              <td>{edit === user.id ? <input type="text" value={editData.email } onChange={(e) => handleEditChange(e, 'email')} /> : user.email}</td>
+              <td>{edit === user.id ? <input type="text" value={editData.role } onChange={(e) => handleEditChange(e, 'role')} /> : user.role}</td>
               <td>
                 {edit === user.id ? (
                   <button className='save_btn' onClick={() => handleSaveEdit(user.id)}>Save</button>
                 ) : (
                   <>
-                    <button className='edit_btn' onClick={() => handleEdit(user.id)}>Edit</button>
+                    <button className='edit_btn' onClick={() => handleEditRow(user.id, user.name, user.email, user.role)}>Edit</button>
                     <button className='delete_btn' onClick={() => handleDeleteRow(user.id)}>Delete</button>
                   </>
                 )}
