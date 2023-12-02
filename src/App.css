@@ -1,38 +1,104 @@
 .App {
   text-align: center;
+  justify-items: center;
+  justify-content: center;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.search_input {
+  display: flex;
+  flex-direction: row;
+  padding-right: 2em;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.row {
+  background-color: rgb(216, 206, 206);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.table{
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+
+}
+
+td {
+  padding: 0.5em;
+  border: 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-evenly;
+  cursor: pointer;
+
+}
+
+
+.pagination > span {
+  border: none;
+  padding: 10px ;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.pagination__selected {
+  background-color: rgb(216, 206, 206);
+  border-radius: 4px;
+}
+
+.save_btn{
+  padding: 0.4em;
+  margin-right: 5px;
+  background-color: rgb(61, 198, 16);
   color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
 }
 
-.App-link {
-  color: #61dafb;
+.edit_btn{
+  padding: 0.4em;
+  margin-right: 5px;
+  background-color: rgb(235, 149, 29);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.delete_btn{
+  padding: 0.4em;
+  margin-right: 5px;
+  background-color: rgb(206, 39, 24);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.bottom_div{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.dlt_select_btn_not{
+  padding: 0.6em;
+  background-color: rgb(203, 202, 196);
+  color: white;
+  cursor: not-allowed;
+  border: none;
+  border-radius: 4px;
+}
+
+.dlt_select_btn{
+  padding: 0.6em;
+  background-color: rgb(206, 39, 24);
+  color: white;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
 }
